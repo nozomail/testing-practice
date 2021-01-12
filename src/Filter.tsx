@@ -31,7 +31,7 @@ function Filter({ filters, setfilters }: Props) {
       <label htmlFor="alcoholic">Alcoholic</label>
 
       <input id="nonAlcoholic" type="checkbox" checked={filters.isNonAlcoholic} onChange={() => handleChange("nonAlcoholic")} />
-      <label htmlFor="nonAlcoholic">Non-Alcoholic</label>
+      <label htmlFor="nonAlcoholic">Non Alcoholic</label>
     </div>
   );
 }
