@@ -17,6 +17,6 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v1
       - name: Install Dependencies
-        run: yarn install -non-interactive
+        run: yarn install --non-interactive
       - name: Run Unit and Integration tests
         run: yarn test
