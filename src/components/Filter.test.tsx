@@ -13,8 +13,8 @@ describe("Filter", () => {
 
     render(<Filter filters={filters} setfilters={setfilters} />);
 
-    const filter1 = screen.getAllByLabelText(/Alcoholic/i)[0];
-    const filter2 = screen.getByLabelText(/Non Alcoholic/i);
+    const filter1 = screen.getByRole("checkbox", { name: "Alcoholic" });
+    const filter2 = screen.getByRole("checkbox", { name: "Non Alcoholic" });
 
     expect(filter1).toBeInTheDocument();
     expect(filter2).toBeInTheDocument();
@@ -31,7 +31,7 @@ describe("Filter", () => {
 
     render(<Filter filters={filters} setfilters={setfilters} />);
 
-    const filter1 = screen.getAllByLabelText(/Alcoholic/i)[0];
+    const filter1 = screen.getByRole("checkbox", { name: "Alcoholic" });
 
     userEvent.click(filter1);
 
@@ -49,7 +49,7 @@ describe("Filter", () => {
       isNonAlcoholic: true,
     };
     render(<Filter filters={filters} setfilters={setfilters} />);
-    const filter1 = screen.getByLabelText(/Non Alcoholic/i);
+    const filter1 = screen.getByRole("checkbox", { name: "Non Alcoholic" });
 
     userEvent.click(filter1);
 

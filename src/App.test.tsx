@@ -1,69 +1,40 @@
 import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Form from "./Form";
+import App from "./App";
 import axios from "axios";
 
-describe("Form", () => {
-  const setdata = jest.fn();
-  const setfilters = jest.fn();
-  test("renders all input fields and a search button", () => {
-    render(<Form setdata={setdata} setfilters={setfilters} />);
+describe("App", () => {
+  jest.mock("axios");
 
-    expect(screen.getByLabelText("Name")).toBeInTheDocument();
+  test("renders default content", () => {
+    render(<App />);
+
+    expect(screen.getByRole("textbox", { name: "Name" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Search" })).toBeInTheDocument();
+    expect(screen.queryByRole("checkbox", { name: "Alcoholic" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("checkbox", { name: "Non Alcoholic" })).not.toBeInTheDocument();
+    expect(screen.queryByText("No data found.")).not.toBeInTheDocument();
   });
 
-  test("renders an input field and a submit button", () => {
-    render(<Form setdata={setdata} setfilters={setfilters} />);
-
-    expect(screen.getByLabelText("Name")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Search" })).toBeInTheDocument();
-  });
-
-  test("types inside an input field and updates the field", () => {
-    render(<Form setdata={setdata} setfilters={setfilters} />);
-
-    userEvent.type(screen.getByLabelText("Name"), "apple");
-
-    expect(screen.getByLabelText("Name")).toHaveValue("apple");
-  });
-
-  test("does not call API and deletes result when searched with ' '", async () => {
+  test("when searched with invalid keywords", async () => {
     const response = {
       data: {
         drinks: null,
       },
     };
-    jest.mock("axios");
     axios.get = jest.fn().mockResolvedValue(response);
-    render(<Form setdata={setdata} setfilters={setfilters} />);
 
-    userEvent.type(screen.getByLabelText("Name"), " ");
+    render(<App />);
+
+    userEvent.type(screen.getByRole("textbox", { name: "Name" }), "aaa");
     userEvent.click(screen.getByRole("button", { name: "Search" }));
 
-    expect(axios.get).not.toHaveBeenCalled();
-    expect(setdata).toBeCalledWith([]);
+    await waitFor(() => screen.getByRole("checkbox", { name: "Alcoholic" }));
+    expect(screen.getByText("No data found.")).toBeInTheDocument();
   });
 
-  test("calls API and deletes result when searched with invalid keyword", async () => {
-    const response = {
-      data: {
-        drinks: null,
-      },
-    };
-    jest.mock("axios");
-    axios.get = jest.fn().mockResolvedValue(response);
-    render(<Form setdata={setdata} setfilters={setfilters} />);
-
-    userEvent.type(screen.getByLabelText("Name"), "aaa");
-    userEvent.click(screen.getByRole("button", { name: "Search" }));
-
-    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
-    expect(setdata).toBeCalledWith([]);
-  });
-
-  test("calls API and updates result with response when searched with 'cherry", async () => {
+  test("when searched with valid keywords", async () => {
     const response = {
       data: {
         drinks: [
@@ -241,37 +212,46 @@ describe("Form", () => {
         ],
       },
     };
-    const newData = [
-      {
-        idDrink: "11239",
-        strAlcoholic: "Alcoholic",
-        strDrink: "Cherry Rum",
-        strInstructions: "Shake all ingredients with ice, strain into a cocktail glass, and serve.",
-        strIngredients: ["Cherry brandy", "Light cream"],
-      },
-      {
-        idDrink: "13072",
-        strAlcoholic: "Alcoholic",
-        strDrink: "Popped cherry",
-        strInstructions: "Served over ice in a tall glass with a popped cherry (can add more popped cherries if in the mood)!",
-        strIngredients: ["Cherry liqueur", "Cranberry juice", "Orange juice"],
-      },
-      {
-        idDrink: "17174",
-        strAlcoholic: "Alcoholic",
-        strDrink: "Cherry Electric Lemonade",
-        strInstructions: "Now stir vigorously and then pour over a large cup of ice. Now drink it with a straw and stir occasionally.",
-        strIngredients: ["Tequila", "Vodka", "White rum", "Triple Sec", "Cherry Grenadine", "Sweet and sour", "Club soda"],
-      },
-    ];
-    jest.mock("axios");
     axios.get = jest.fn().mockResolvedValue(response);
-    render(<Form setdata={setdata} setfilters={setfilters} />);
 
-    userEvent.type(screen.getByLabelText("Name"), "cherry");
+    render(<App />);
+
+    userEvent.type(screen.getByRole("textbox", { name: "Name" }), "cherry");
     userEvent.click(screen.getByRole("button", { name: "Search" }));
 
-    await waitFor(() => expect(axios.get).toHaveBeenCalledTimes(1));
-    expect(setdata).toBeCalledWith(newData);
+    await waitFor(() => screen.getByRole("checkbox", { name: "Alcoholic" }));
+
+    expect(screen.getByText("Cherry Rum")).toBeInTheDocument();
+    expect(screen.getByText("Popped cherry")).toBeInTheDocument();
+    expect(screen.getByText("Cherry Electric Lemonade")).toBeInTheDocument();
+    expect(screen.getByRole("checkbox", { name: "Alcoholic" })).toBeInTheDocument();
+    expect(screen.getByRole("checkbox", { name: "Alcoholic" })).toBeChecked();
+    expect(screen.getByRole("checkbox", { name: "Non Alcoholic" })).toBeInTheDocument();
+    expect(screen.getByRole("checkbox", { name: "Non Alcoholic" })).toBeChecked();
+
+    userEvent.click(screen.getByRole("checkbox", { name: "Alcoholic" }));
+
+    expect(screen.getByRole("checkbox", { name: "Alcoholic" })).not.toBeChecked();
+    expect(screen.getByRole("checkbox", { name: "Non Alcoholic" })).toBeChecked();
+    expect(screen.getByText("No data found.")).toBeInTheDocument();
+    expect(screen.queryByText("Cherry Rum")).not.toBeInTheDocument();
+    expect(screen.queryByText("Popped cherry")).not.toBeInTheDocument();
+    expect(screen.queryByText("Cherry Electric Lemonade")).not.toBeInTheDocument();
+
+    userEvent.click(screen.getByRole("checkbox", { name: "Alcoholic" }));
+
+    expect(screen.getByRole("checkbox", { name: "Alcoholic" })).toBeChecked();
+    expect(screen.getByRole("checkbox", { name: "Non Alcoholic" })).toBeChecked();
+    expect(screen.getByText("Cherry Rum")).toBeInTheDocument();
+    expect(screen.getByText("Popped cherry")).toBeInTheDocument();
+    expect(screen.getByText("Cherry Electric Lemonade")).toBeInTheDocument();
+
+    userEvent.click(screen.getByRole("checkbox", { name: "Non Alcoholic" }));
+
+    expect(screen.getByRole("checkbox", { name: "Alcoholic" })).toBeChecked();
+    expect(screen.getByRole("checkbox", { name: "Non Alcoholic" })).not.toBeChecked();
+    expect(screen.getByText("Cherry Rum")).toBeInTheDocument();
+    expect(screen.getByText("Popped cherry")).toBeInTheDocument();
+    expect(screen.getByText("Cherry Electric Lemonade")).toBeInTheDocument();
   });
 });

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DataProps } from "./types";
+import { DataProps } from "../types";
 
 function ListItem({ idDrink, strAlcoholic, strDrink, strInstructions, strIngredients }: DataProps) {
   const [isOpen, setisOpen] = useState(false);

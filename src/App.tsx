@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Form from "./Form";
-import ListItem from "./ListItem";
-import Filter from "./Filter";
+import Form from "./components/Form";
+import ListItem from "./components/ListItem";
+import Filter from "./components/Filter";
 import { DataProps } from "./types";
 
 function App() {
