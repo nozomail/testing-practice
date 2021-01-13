@@ -3,26 +3,72 @@
 exports[`App matches snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="App"
+    class="MuiBox-root MuiBox-root-1 App"
   >
+    <div
+      class="MuiBox-root MuiBox-root-2"
+    >
+      <h1
+        class="MuiTypography-root MuiTypography-h4"
+      >
+        Cocktail Search
+      </h1>
+    </div>
     <form>
-      <div>
+      <div
+        class="MuiFormControl-root MuiTextField-root"
+      >
         <label
-          for="name"
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+          data-shrink="false"
+          for="outlined-password-input"
+          id="outlined-password-input-label"
         >
           Name
         </label>
-        <input
-          id="name"
-          type="text"
-          value=""
-        />
+        <div
+          class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+        >
+          <input
+            aria-invalid="false"
+            autocomplete="current-password"
+            class="MuiInputBase-input MuiOutlinedInput-input"
+            id="outlined-password-input"
+            type="text"
+            value=""
+          />
+          <fieldset
+            aria-hidden="true"
+            class="PrivateNotchedOutline-root-3 MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              class="PrivateNotchedOutline-legendLabelled-5"
+            >
+              <span>
+                Name
+              </span>
+            </legend>
+          </fieldset>
+        </div>
       </div>
-      <button
-        type="submit"
+      <div
+        class="MuiBox-root MuiBox-root-7"
       >
-        Search
-      </button>
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+          tabindex="0"
+          type="submit"
+        >
+          <span
+            class="MuiButton-label"
+          >
+            Search
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </button>
+      </div>
     </form>
   </div>
 </DocumentFragment>
