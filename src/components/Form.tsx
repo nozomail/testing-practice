@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { TextField, Button, Box } from "@material-ui/core";
 import { OriginalDataProps, DataProps, FiltersProps } from "../types";
 
 type Props = {
@@ -41,11 +42,12 @@ function Form({ setdata, setfilters }: Props) {
 
   return (
     <form onSubmit={(e) => handleFormSubmit(e)}>
-      <div>
-        <label htmlFor="name">Name</label>
-        <input id="name" type="text" value={name} onChange={(e) => setname(e.target.value)} />
-      </div>
-      <button type="submit">Search</button>
+      <TextField id="outlined-password-input" label="Name" type="text" autoComplete="current-password" variant="outlined" value={name} onChange={(e) => setname(e.target.value)} />
+      <Box mt={2}>
+        <Button type="submit" variant="contained" color="primary">
+          Search
+        </Button>
+      </Box>
     </form>
   );
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { Typography, Box, List } from "@material-ui/core";
 import Form from "./components/Form";
-import ListItem from "./components/ListItem";
+import Item from "./components/Item";
 import Filter from "./components/Filter";
 import { DataProps } from "./types";
 
@@ -29,23 +30,28 @@ function App() {
   }, [data, filters]);
 
   return (
-    <div className="App">
+    <Box className="App" p={2}>
+      <Box mb={4}>
+        <Typography variant="h4" component="h1">
+          Cocktail Search
+        </Typography>
+      </Box>
       <Form setdata={setdata} setfilters={setfilters} />
       {data !== undefined && (
-        <div>
+        <Box mt={4}>
           <Filter filters={filters} setfilters={setfilters} />
           {drinkList.length > 0 ? (
-            <ul>
+            <List>
               {drinkList.map((item) => (
-                <ListItem key={item.idDrink} {...item} />
+                <Item key={item.idDrink} {...item} />
               ))}
-            </ul>
+            </List>
           ) : (
             <p>No data found.</p>
           )}
-        </div>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 }
 
