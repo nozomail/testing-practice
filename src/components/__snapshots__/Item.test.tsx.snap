@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Item matches snapshot 1`] = `
+<DocumentFragment>
+  <li
+    aria-disabled="false"
+    class="MuiButtonBase-root MuiListItem-root MuiListItem-gutters MuiListItem-button"
+    role="button"
+    tabindex="0"
+  >
+    <div>
+      <strong>
+        Apple Karate
+      </strong>
+    </div>
+    <span
+      class="MuiTouchRipple-root"
+    />
+  </li>
+</DocumentFragment>
+`;

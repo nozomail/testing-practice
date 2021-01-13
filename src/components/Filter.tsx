@@ -1,4 +1,5 @@
 import React from "react";
+import { Checkbox, FormControlLabel } from "@material-ui/core";
 import { FiltersProps } from "../types";
 
 type Props = {
@@ -27,11 +28,8 @@ function Filter({ filters, setfilters }: Props) {
 
   return (
     <div className="Filter">
-      <input id="alcoholic" type="checkbox" checked={filters.isAlcoholic} onChange={() => handleChange("alcoholic")} />
-      <label htmlFor="alcoholic">Alcoholic</label>
-
-      <input id="nonAlcoholic" type="checkbox" checked={filters.isNonAlcoholic} onChange={() => handleChange("nonAlcoholic")} />
-      <label htmlFor="nonAlcoholic">Non Alcoholic</label>
+      <FormControlLabel control={<Checkbox checked={filters.isAlcoholic} onChange={() => handleChange("alcoholic")} name="alcoholic" />} label="Alcoholic" />
+      <FormControlLabel control={<Checkbox checked={filters.isNonAlcoholic} onChange={() => handleChange("nonAlcoholic")} name="nonAlcoholic" />} label="Non Alcoholic" />
     </div>
   );
 }
