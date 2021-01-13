@@ -7,6 +7,11 @@ import axios from "axios";
 describe("App", () => {
   jest.mock("axios");
 
+  test("matches snapshot", () => {
+    const { asFragment } = render(<App />);
+    expect(asFragment()).toMatchSnapshot();
+  });
+
   test("renders default content", () => {
     render(<App />);
 

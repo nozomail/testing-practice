@@ -9,6 +9,11 @@ describe("Form", () => {
   const setfilters = jest.fn();
   jest.mock("axios");
 
+  test("matches snapshot", () => {
+    const { asFragment } = render(<Form setdata={setdata} setfilters={setfilters} />);
+    expect(asFragment()).toMatchSnapshot();
+  });
+
   test("renders all input fields and a search button", () => {
     render(<Form setdata={setdata} setfilters={setfilters} />);
 

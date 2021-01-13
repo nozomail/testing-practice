@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Filter mathes snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Filter"
+  >
+    <input
+      checked=""
+      id="alcoholic"
+      type="checkbox"
+    />
+    <label
+      for="alcoholic"
+    >
+      Alcoholic
+    </label>
+    <input
+      checked=""
+      id="nonAlcoholic"
+      type="checkbox"
+    />
+    <label
+      for="nonAlcoholic"
+    >
+      Non Alcoholic
+    </label>
+  </div>
+</DocumentFragment>
+`;

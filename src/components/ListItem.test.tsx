@@ -12,6 +12,11 @@ describe("ListItem", () => {
     strIngredients: ["Carrot"],
   };
 
+  test("matches snapshot", () => {
+    const { asFragment } = render(<ListItem {...item} />);
+    expect(asFragment()).toMatchSnapshot();
+  });
+
   test("shows item's name and alcoholic or non alcoholic", () => {
     render(<ListItem {...item} />);
 

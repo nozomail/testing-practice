@@ -4,6 +4,15 @@ import userEvent from "@testing-library/user-event";
 import Filter from "./Filter";
 
 describe("Filter", () => {
+  test("mathes snapshot", () => {
+    const setfilters = jest.fn();
+    const filters = {
+      isAlcoholic: true,
+      isNonAlcoholic: true,
+    };
+    const { asFragment } = render(<Filter filters={filters} setfilters={setfilters} />);
+    expect(asFragment()).toMatchSnapshot();
+  });
   test("renders all filter items checked", () => {
     const setfilters = jest.fn();
     const filters = {
